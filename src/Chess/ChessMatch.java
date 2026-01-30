@@ -25,7 +25,7 @@ public class ChessMatch {
         return mat;
     }
 
-    public ChessPiece perfomaceChessMove(ChessPosition sourcePosition, ChessPosition targetPosition){
+    public ChessPiece perfomaceChessMove(ChessPosition sourcePosition, ChessPosition targetPosition) {
         Position source = sourcePosition.toPosition();
         Position target = targetPosition.toPosition();
         validateSourcePosition(source);
@@ -34,24 +34,27 @@ public class ChessMatch {
 
     }
 
-    private Piece makeMove(Position source, Position target){
+    private Piece makeMove(Position source, Position target) {
         Piece p = board.removePiece(source);
         Piece capturedPiece = board.removePiece(target);
         board.placePiece(p, target);
         return capturedPiece;
     }
 
-    private void validateSourcePosition(Position position){
-        if (!board.thereIsAPiece(position)){
+    private void validateSourcePosition(Position position) {
+        if (!board.thereIsAPiece(position)) {
             throw new ChessException("There is no piece on source position");
+        }
+        if (!board.piece(position).isThereAnyPossibleMove()) {
+            throw new ChessException("There is no possible moves for the chosen piece");
         }
     }
 
 
-
-private void placeNewPiece(char column, int row, ChessPiece piece){
+    private void placeNewPiece(char column, int row, ChessPiece piece) {
         board.placePiece(piece, new ChessPosition(column, row).toPosition());
-}
+    }
+
     private void initialSetup() {
         placeNewPiece('c', 1, new Rook(board, Color.WHITE));
         placeNewPiece('c', 2, new Rook(board, Color.WHITE));
