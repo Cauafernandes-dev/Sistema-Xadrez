@@ -24,7 +24,8 @@ https://github.com/Cauafernandes-dev/Sistema-Xadrez.git
 
 
 # Enter the project folder:
-cd Sistema-Xadrez
+cd Sistema-Xadrez/src
+javac Application/Program.java
 
 # To execute
 java application/Program
