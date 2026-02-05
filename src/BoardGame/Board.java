@@ -2,9 +2,9 @@ package BoardGame;
 
 public class Board {
 
-    private int rows;
-    private int columns;
-    private Piece[][] pieces;
+    private final int rows;
+    private final int columns;
+    private final Piece[][] pieces;
 
     public Board(int rows, int columns) {
         if (rows < 1 || columns < 1) {
@@ -45,11 +45,11 @@ public class Board {
         piece.position = position;
     }
 
-    public Piece removePiece(Position position){
-        if (!positionExists(position)){
+    public Piece removePiece(Position position) {
+        if (!positionExists(position)) {
             throw new BoardException("Position not on the board");
         }
-        if (piece(position) == null){
+        if (piece(position) == null) {
             return null;
         }
         Piece aux = piece(position);
