@@ -1,7 +1,7 @@
 package Application;
 
-import BoardGame.Board;
-import BoardGame.Position;
+
+
 import Chess.ChessException;
 import Chess.ChessMatch;
 import Chess.ChessPiece;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Program {
-    public static void main(String[] args) {
+     static void main() {
         Scanner sc = new Scanner(System.in);
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> captured = new ArrayList<>();
@@ -50,10 +50,7 @@ public class Program {
                     chessMatch.replacePromotedPiece(type);
                 }
             }
-            catch (ChessException e) {
-                System.out.println(e.getMessage());
-                sc.nextLine();
-            } catch (InputMismatchException e) {
+            catch (ChessException | InputMismatchException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();
             }
