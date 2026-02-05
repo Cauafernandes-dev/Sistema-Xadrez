@@ -2,8 +2,11 @@ package Chess;
 
 import BoardGame.BoardException;
 
+import java.io.Serial;
+
 public class ChessException extends BoardException {
-    private static final long serialVersionUID = 1l;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     public ChessException(String msg){
         super(msg);
