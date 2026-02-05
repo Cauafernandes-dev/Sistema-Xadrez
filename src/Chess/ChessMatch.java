@@ -9,7 +9,7 @@ import Chess.pieces.*;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ChessMatch {
     private Color currentPlayer;
@@ -20,8 +20,8 @@ public class ChessMatch {
     private ChessPiece enPassantVulnerable;
     private ChessPiece promoted;
 
-    private List<Piece> pieceOnTheBoard = new ArrayList<>();
-    private List<Piece> capturedPieces = new ArrayList<>();
+    private final List<Piece> pieceOnTheBoard = new ArrayList<>();
+    private final List<Piece> capturedPieces = new ArrayList<>();
 
     public ChessMatch() {
         board = new Board(8, 8);
@@ -93,7 +93,7 @@ public class ChessMatch {
             }
         }
 
-        check = (testCheck(opponent(currentPlayer))) ? true : false;
+        check = testCheck(opponent(currentPlayer));
 
         if (testCheckMate(opponent(currentPlayer))){
             checkMate = true;
@@ -135,10 +135,12 @@ public class ChessMatch {
 
     }
     private ChessPiece newPiece(String type, Color color){
-        if (type.equals("B")) return new Bishop(board, color);
-        if (type.equals("N")) return new Knight(board, color);
-        if (type.equals("Q")) return new Queen(board, color);
-        return new Rook(board, color);
+        return switch (type) {
+            case "B" -> new Bishop(board, color);
+            case "N" -> new Knight(board, color);
+            case "Q" -> new Queen(board, color);
+            default -> new Rook(board, color);
+        };
     }
 
 
@@ -259,7 +261,7 @@ public class ChessMatch {
     }
 
     private ChessPiece king(Color color) {
-        List<Piece> list = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color).collect(Collectors.toList());
+        List<Piece> list = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color).toList();
         for (Piece p : list) {
             if (p instanceof King) {
                 return (ChessPiece) p;
@@ -270,7 +272,7 @@ public class ChessMatch {
 
     private boolean testCheck(Color color) {
         Position kingPosition = king(color).getChessPosition().toPosition();
-        List<Piece> opponentPieces = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == opponent(color)).collect(Collectors.toList());
+        List<Piece> opponentPieces = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == opponent(color)).toList();
         for (Piece p : opponentPieces) {
             boolean[][] mat = p.possibleMoves();
             if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
@@ -284,7 +286,7 @@ public class ChessMatch {
         if (!testCheck(color)) {
             return false;
         }
-        List<Piece> list = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color).collect(Collectors.toList());
+        List<Piece> list = pieceOnTheBoard.stream().filter(x -> ((ChessPiece) x).getColor() == color).toList();
         for (Piece p : list) {
             boolean[][] mat = p.possibleMoves();
             for (int i = 0; i < board.getRows(); i++) {
